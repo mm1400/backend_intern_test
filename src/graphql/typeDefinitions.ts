@@ -35,7 +35,7 @@ export const typeDefs = /* GraphQL */ `
   type Query {
     hello: String
     todo(id: ID!): Todo
-    todos: [Todo]!
+    todos(isCompleted: Boolean): [Todo]!
   }
 
   type Todo {

@@ -12,6 +12,14 @@ export const Query: IQuery<Context> = {
     return todo
   },
   todos: async (_, args, { prisma }) => {
+    if (typeof args.isCompleted === "boolean") {
+      const todos = await prisma.todo.findMany({
+        where: {
+          completed: args.isCompleted
+        }
+      });
+      return todos;
+    }
     const todos = await prisma.todo.findMany();
     return todos;
   }
