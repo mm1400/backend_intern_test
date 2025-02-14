@@ -15,4 +15,12 @@ export const typeDefs = /* GraphQL */ `
   type Query {
     hello: String
   }
+
+  type Todo {
+    id: ID!
+    title: String!
+    completed: Boolean!
+    createdAt: timestamp
+    updatedAt: timestamp
+  }
 `;
