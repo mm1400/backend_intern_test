@@ -1,7 +1,7 @@
 import { GraphQLScalarType, Kind } from 'graphql';
 
 // https://www.apollographql.com/docs/apollo-server/schema/custom-scalars
-export const TimeStamp: GraphQLScalarType<Date | null, number> = new GraphQLScalarType({
+export const Timestamp: GraphQLScalarType<Date | null, number> = new GraphQLScalarType({
   name: 'Timestamp',
   description: 'Timestamp custom scalar type',
   serialize(value) {

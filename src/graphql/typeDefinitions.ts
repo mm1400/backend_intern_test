@@ -1,6 +1,7 @@
 export const typeDefs = /* GraphQL */ `
 
   scalar Timestamp
+
   input CreateSomethingInput {
     name: String!
   }
