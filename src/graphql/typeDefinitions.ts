@@ -22,7 +22,7 @@ export const typeDefs = /* GraphQL */ `
   type Mutation {
     createSomething(input: CreateSomethingInput!): Something!
     createTodo(input: CreateTodoInput!): Todo!
-    deleteTodo(input: DeleteTodoInput!): Todo!
+    deleteTodo(input: DeleteTodoInput!): Todo
   }
 
   type Query {
