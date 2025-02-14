@@ -5,6 +5,7 @@ import { typeDefs } from "./typeDefinitions";
 import { PrismaClient } from "@prisma/client";
 import { Query } from "./query";
 import { Mutation } from "./mutation";
+import { TimeStamp } from "./timestamp";
 
 const prisma = new PrismaClient();
 
@@ -15,6 +16,7 @@ const schema = createSchema({
   resolvers: {
     Query,
     Mutation,
+    TimeStamp,
   },
 });
 
