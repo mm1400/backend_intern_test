@@ -1,4 +1,6 @@
 export const typeDefs = /* GraphQL */ `
+
+  scalar Timestamp
   input CreateSomethingInput {
     name: String!
   }
@@ -20,7 +22,7 @@ export const typeDefs = /* GraphQL */ `
     id: ID!
     title: String!
     completed: Boolean!
-    createdAt: timestamp
-    updatedAt: timestamp
+    createdAt: Timestamp!
+    updatedAt: Timestamp!
   }
 `;
