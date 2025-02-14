@@ -47,5 +47,32 @@ export const Mutation: IMutation<Context> = {
         return Promise.reject(err)
       });
       return todo;
+  },
+  updateTodo: async (_, { input }, { prisma }) => {
+    const data : { title?: string, completed?: boolean } = {};
+    if (input.title) {
+      data.title = input.title;
+    }
+    if (input.completed) {
+      data.completed = input.completed;
+    }
+    const todo = await prisma.todo.update({
+      where: {
+        id: input.id,
+      },
+      data: {
+        title: data.title,
+        completed: data.completed,
+      },
+    })
+    .catch((err: unknown) => {
+      if (err instanceof Prisma.PrismaClientKnownRequestError) {
+        return Promise.reject(
+          new GraphQLError(`Cannot delete non existant todo with id:'${input.id}'.`)
+        ) 
+      }
+      return Promise.reject(err)
+    });
+    return todo;
   }
 };
