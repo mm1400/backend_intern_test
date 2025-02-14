@@ -17,6 +17,7 @@ export const typeDefs = /* GraphQL */ `
 
   type Query {
     hello: String
+    todo: Todo
   }
 
   type Todo {
