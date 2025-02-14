@@ -68,6 +68,7 @@ export const Mutation: IMutation<Context> = {
       data: {
         title: data.title,
         completed: data.completed,
+        updatedAt: new Date(),
       },
     })
     .catch((err: unknown) => {
