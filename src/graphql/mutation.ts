@@ -1,6 +1,9 @@
 import { type MutationResolvers as IMutation } from "./generated/graphql";
 import { Context } from "./context";
+import { GraphQLError } from "graphql";
+import { Prisma } from '@prisma/client'
 
+// for error handling: https://the-guild.dev/graphql/yoga-server/tutorial/basic/09-error-handling
 export const Mutation: IMutation<Context> = {
   createSomething: async (_, { input }, { prisma }) => {
     const something = await prisma.something.create({
@@ -30,15 +33,19 @@ export const Mutation: IMutation<Context> = {
     };
   },
   deleteTodo: async (_, { input }, { prisma }) => {
-    try {
       const todo = await prisma.todo.delete({
         where: {
           id: input.id,
         },
+      })
+      .catch((err: unknown) => {
+        if (err instanceof Prisma.PrismaClientKnownRequestError) {
+          return Promise.reject(
+            new GraphQLError(`Cannot delete non existant todo with id:'${input.id}'.`)
+          ) 
+        }
+        return Promise.reject(err)
       });
       return todo;
-    } catch (error) {
-      return null;
-    }
   }
 };
