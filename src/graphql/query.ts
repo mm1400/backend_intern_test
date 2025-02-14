@@ -11,4 +11,8 @@ export const Query: IQuery<Context> = {
     });
     return todo
   },
+  todos: async (_, args, { prisma }) => {
+    const todos = await prisma.todo.findMany();
+    return todos;
+  }
 };
