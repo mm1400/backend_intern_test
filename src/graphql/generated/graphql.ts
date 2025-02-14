@@ -47,6 +47,11 @@ export type Query = {
   todo?: Maybe<Todo>;
 };
 
+
+export type QueryTodoArgs = {
+  id: Scalars['ID']['input'];
+};
+
 export type Something = {
   __typename?: 'Something';
   id: Scalars['ID']['output'];
@@ -166,7 +171,7 @@ export type MutationResolvers<ContextType = any, ParentType extends ResolversPar
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   hello?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  todo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType>;
+  todo?: Resolver<Maybe<ResolversTypes['Todo']>, ParentType, ContextType, RequireFields<QueryTodoArgs, 'id'>>;
 };
 
 export type SomethingResolvers<ContextType = any, ParentType extends ResolversParentTypes['Something'] = ResolversParentTypes['Something']> = {

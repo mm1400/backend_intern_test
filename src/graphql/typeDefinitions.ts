@@ -22,7 +22,7 @@ export const typeDefs = /* GraphQL */ `
 
   type Query {
     hello: String
-    todo: Todo
+    todo(id: ID!): Todo
   }
 
   type Todo {
