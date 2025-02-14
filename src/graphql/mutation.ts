@@ -56,6 +56,11 @@ export const Mutation: IMutation<Context> = {
     if (input.completed) {
       data.completed = input.completed;
     }
+
+    if (Object.keys(data).length === 0) {
+        throw new GraphQLError(`Cannot update todo with empty input.`)
+    }
+
     const todo = await prisma.todo.update({
       where: {
         id: input.id,
