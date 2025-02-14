@@ -14,4 +14,19 @@ export const Mutation: IMutation<Context> = {
       name: something.name,
     };
   },
+  createTodo: async (_, { input }, { prisma }) => {
+    const todo = await prisma.todo.create({
+      data: {
+        title: input.title,
+      },
+    });
+    // return value must match everything from Todo type
+    return {
+      id: todo.id,
+      title: todo.title,
+      completed: todo.completed,
+      createdAt: todo.createdAt,
+      updatedAt: todo.updatedAt,
+    };
+  },
 };
