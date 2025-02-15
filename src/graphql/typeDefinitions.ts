@@ -2,6 +2,18 @@ export const typeDefs = /* GraphQL */ `
 
   scalar Timestamp
 
+  enum Sort {
+  asc
+  desc
+  }
+
+  input TodoOrderByInput {
+  title: Sort
+  createdAt: Sort
+  updatedAt: Sort
+  }
+
+
   input CreateSomethingInput {
     name: String!
   }
@@ -35,7 +47,7 @@ export const typeDefs = /* GraphQL */ `
   type Query {
     hello: String
     todo(id: ID!): Todo
-    todos(isCompleted: Boolean, take: Int, skip: Int): [Todo]!
+    todos(isCompleted: Boolean, take: Int, skip: Int, orderBy: TodoOrderByInput): [Todo]!
   }
 
   type Todo {

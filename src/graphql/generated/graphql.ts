@@ -72,6 +72,7 @@ export type QueryTodoArgs = {
 
 export type QueryTodosArgs = {
   isCompleted?: InputMaybe<Scalars['Boolean']['input']>;
+  orderBy?: InputMaybe<TodoOrderByInput>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
 };
@@ -82,6 +83,11 @@ export type Something = {
   name: Scalars['String']['output'];
 };
 
+export enum Sort {
+  Asc = 'asc',
+  Desc = 'desc'
+}
+
 export type Todo = {
   __typename?: 'Todo';
   completed: Scalars['Boolean']['output'];
@@ -89,6 +95,12 @@ export type Todo = {
   id: Scalars['ID']['output'];
   title: Scalars['String']['output'];
   updatedAt: Scalars['Timestamp']['output'];
+};
+
+export type TodoOrderByInput = {
+  createdAt?: InputMaybe<Sort>;
+  title?: InputMaybe<Sort>;
+  updatedAt?: InputMaybe<Sort>;
 };
 
 export type UpdateTodoInput = {
@@ -177,9 +189,11 @@ export type ResolversTypes = {
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   Something: ResolverTypeWrapper<Something>;
+  Sort: Sort;
   String: ResolverTypeWrapper<Scalars['String']['output']>;
   Timestamp: ResolverTypeWrapper<Scalars['Timestamp']['output']>;
   Todo: ResolverTypeWrapper<Todo>;
+  TodoOrderByInput: TodoOrderByInput;
   UpdateTodoInput: UpdateTodoInput;
 };
 
@@ -197,6 +211,7 @@ export type ResolversParentTypes = {
   String: Scalars['String']['output'];
   Timestamp: Scalars['Timestamp']['output'];
   Todo: Todo;
+  TodoOrderByInput: TodoOrderByInput;
   UpdateTodoInput: UpdateTodoInput;
 };
 
