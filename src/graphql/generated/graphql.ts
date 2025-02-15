@@ -113,6 +113,7 @@ export type TodoOrderByInput = {
 
 export type UpdateTodoInput = {
   completed?: InputMaybe<Scalars['Boolean']['input']>;
+  dueDate?: InputMaybe<Scalars['Timestamp']['input']>;
   id: Scalars['ID']['input'];
   title?: InputMaybe<Scalars['String']['input']>;
 };

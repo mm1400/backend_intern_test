@@ -53,33 +53,23 @@ export const Mutation: IMutation<Context> = {
       return todo;
   },
   updateTodo: async (_, { input }, { prisma }) => {
-    const data : { title?: string, completed?: boolean } = {};
-    if (input.title) {
-      data.title = input.title;
-    }
-    if (input.completed) {
-      data.completed = input.completed;
-    }
-
-    if (Object.keys(data).length === 0) {
+    if (Object.keys(input).length === 0) {
         throw new GraphQLError(`Cannot update todo with empty input.`)
     }
-
     const todo = await prisma.todo.update({
       where: {
         id: input.id,
       },
       data: {
-        title: data.title,
-        completed: data.completed,
+        title: input.title ?? undefined,
+        completed: input.completed ?? undefined,
         updatedAt: new Date(),
+        dueDate: input.dueDate ?? undefined,
       },
     })
     .catch((err: unknown) => {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
-        return Promise.reject(
-          new GraphQLError(`Cannot delete non existant todo with id:'${input.id}'.`)
-        ) 
+        throw new GraphQLError(`Cannot update non existant todo with id:'${input.id}'`)
       }
       return Promise.reject(err)
     });

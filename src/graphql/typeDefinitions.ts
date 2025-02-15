@@ -35,6 +35,7 @@ export const typeDefs = /* GraphQL */ `
     id: ID!
     title: String
     completed: Boolean
+    dueDate: Timestamp
   }
 
   type Something {
