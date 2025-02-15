@@ -13,7 +13,7 @@ export const Query: IQuery<Context> = {
     return todo
   },
   todos: async (_, args, { prisma }) => {
-    if (args.orderBy && Object.keys(args.orderBy).length  > 0) {
+    if (args.orderBy && Object.keys(args.orderBy).length > 1) {
       throw new GraphQLError("orderBy is only available for one field at a time");
     }
     const todos = await prisma.todo.findMany({
