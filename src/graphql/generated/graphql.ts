@@ -99,7 +99,7 @@ export type Todo = {
   __typename?: 'Todo';
   completed: Scalars['Boolean']['output'];
   createdAt: Scalars['Timestamp']['output'];
-  dueDate: Scalars['Timestamp']['output'];
+  dueDate?: Maybe<Scalars['Timestamp']['output']>;
   id: Scalars['ID']['output'];
   title: Scalars['String']['output'];
   updatedAt: Scalars['Timestamp']['output'];
@@ -250,7 +250,7 @@ export interface TimestampScalarConfig extends GraphQLScalarTypeConfig<Resolvers
 export type TodoResolvers<ContextType = any, ParentType extends ResolversParentTypes['Todo'] = ResolversParentTypes['Todo']> = {
   completed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
-  dueDate?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  dueDate?: Resolver<Maybe<ResolversTypes['Timestamp']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;

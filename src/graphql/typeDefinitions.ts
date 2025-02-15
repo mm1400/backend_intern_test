@@ -67,6 +67,6 @@ export const typeDefs = /* GraphQL */ `
     completed: Boolean!
     createdAt: Timestamp!
     updatedAt: Timestamp!
-    dueDate: Timestamp!
+    dueDate: Timestamp
   }
 `;
