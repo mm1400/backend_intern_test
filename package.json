@@ -7,7 +7,7 @@
     "prisma:generate": "prisma generate",
     "graphql:generate": "graphql-codegen --config codegen.ts",
     "generate": "npm run prisma:generate && npm run graphql:generate",
-    "test": "mocha src/test/**/*.ts --timeout 10000"
+    "test": "mocha src/test/**/*.ts --require ts-node/register --timeout 10000"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "5.0.4",
@@ -24,7 +24,6 @@
     "prisma": "^6.3.1",
     "reflect-metadata": "^0.2.2",
     "supertest": "^7.0.0",
-    "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
   },
   "dependencies": {
