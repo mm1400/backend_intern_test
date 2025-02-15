@@ -69,7 +69,9 @@ export const Mutation: IMutation<Context> = {
     })
     .catch((err: unknown) => {
       if (err instanceof Prisma.PrismaClientKnownRequestError) {
-        throw new GraphQLError(`Cannot update non existant todo with id:'${input.id}'`)
+        return Promise.reject(
+          new GraphQLError(`Cannot delete non existant todo with id:'${input.id}'.`)
+        ) 
       }
       return Promise.reject(err)
     });
