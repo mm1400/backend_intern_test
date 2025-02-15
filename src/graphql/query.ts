@@ -16,9 +16,18 @@ export const Query: IQuery<Context> = {
     if (args.orderBy && Object.keys(args.orderBy).length > 1) {
       throw new GraphQLError("orderBy is only available for one field at a time");
     }
+    if (args.dueDate && args.dueDate !== 'overdue' && args.dueDate !== 'upcoming') {
+      throw new GraphQLError("dueDate must be either 'overdue' or 'upcoming'");
+    }
+
+    const dueDateFilters = {
+      overdue: { lt: new Date() } ,
+      upcoming: { gt: new Date() },
+    }
     const todos = await prisma.todo.findMany({
       where : {
-        completed: args.isCompleted ?? undefined
+        completed: args.isCompleted ?? undefined,
+        dueDate: args.dueDate ? dueDateFilters[args.dueDate] : undefined
       },
       orderBy: {
         title: args.orderBy?.title ?? undefined,

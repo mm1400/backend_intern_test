@@ -7,12 +7,16 @@ export const typeDefs = /* GraphQL */ `
   desc
   }
 
+  enum DueDate {
+    overdue
+    upcoming
+  }
+
   input TodoOrderByInput {
   title: Sort
   createdAt: Sort
   updatedAt: Sort
   }
-
 
   input CreateSomethingInput {
     name: String!
@@ -47,7 +51,13 @@ export const typeDefs = /* GraphQL */ `
   type Query {
     hello: String
     todo(id: ID!): Todo
-    todos(isCompleted: Boolean, take: Int, skip: Int, orderBy: TodoOrderByInput): [Todo]!
+    todos(
+      isCompleted: Boolean, 
+      take: Int, 
+      skip: Int, 
+      orderBy: TodoOrderByInput, 
+      dueDate: DueDate)
+      : [Todo]!
   }
 
   type Todo {
@@ -56,5 +66,6 @@ export const typeDefs = /* GraphQL */ `
     completed: Boolean!
     createdAt: Timestamp!
     updatedAt: Timestamp!
+    dueDate: Timestamp!
   }
 `;
