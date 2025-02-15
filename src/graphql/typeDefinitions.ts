@@ -24,6 +24,7 @@ export const typeDefs = /* GraphQL */ `
   
   input CreateTodoInput {
     title: String!
+    dueDate: Timestamp
   }
 
   input DeleteTodoInput {

@@ -22,6 +22,7 @@ export type CreateSomethingInput = {
 };
 
 export type CreateTodoInput = {
+  dueDate?: InputMaybe<Scalars['Timestamp']['input']>;
   title: Scalars['String']['input'];
 };
 
