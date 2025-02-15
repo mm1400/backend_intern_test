@@ -72,6 +72,8 @@ export type QueryTodoArgs = {
 
 export type QueryTodosArgs = {
   isCompleted?: InputMaybe<Scalars['Boolean']['input']>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
 };
 
 export type Something = {
@@ -171,6 +173,7 @@ export type ResolversTypes = {
   CreateTodoInput: CreateTodoInput;
   DeleteTodoInput: DeleteTodoInput;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
+  Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
   Query: ResolverTypeWrapper<{}>;
   Something: ResolverTypeWrapper<Something>;
@@ -187,6 +190,7 @@ export type ResolversParentTypes = {
   CreateTodoInput: CreateTodoInput;
   DeleteTodoInput: DeleteTodoInput;
   ID: Scalars['ID']['output'];
+  Int: Scalars['Int']['output'];
   Mutation: {};
   Query: {};
   Something: Something;
