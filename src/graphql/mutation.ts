@@ -2,6 +2,7 @@ import { type MutationResolvers as IMutation } from "./generated/graphql";
 import { Context } from "./context";
 import { GraphQLError } from "graphql";
 import { Prisma } from '@prisma/client'
+import { z } from "zod";
 
 // for error handling: https://the-guild.dev/graphql/yoga-server/tutorial/basic/09-error-handling
 export const Mutation: IMutation<Context> = {
@@ -18,6 +19,14 @@ export const Mutation: IMutation<Context> = {
     };
   },
   createTodo: async (_, { input }, { prisma }) => {
+    const dateSchema = z.coerce.number().transform((val) => new Date(val));
+    // if a string is passed, it gets converted to null
+    if (input.dueDate === null) {
+      throw new GraphQLError(`Invalid date format for dueDate: '${input.dueDate}'. Must be a timestamp in milliseconds as a number. Strings are not allowed.`);
+    }
+    if (input.dueDate && !dateSchema.parse(input.dueDate)) {
+      throw new GraphQLError(`Invalid date format for dueDate: '${input.dueDate}'. Must be a timestamp in milliseconds as a number.`);
+    }
     const todo = await prisma.todo.create({
       data: {
         title: input.title,
