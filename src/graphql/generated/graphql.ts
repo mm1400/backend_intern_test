@@ -29,6 +29,11 @@ export type DeleteTodoInput = {
   id: Scalars['ID']['input'];
 };
 
+export enum DueDate {
+  Overdue = 'overdue',
+  Upcoming = 'upcoming'
+}
+
 export type Mutation = {
   __typename?: 'Mutation';
   createSomething: Something;
@@ -71,6 +76,7 @@ export type QueryTodoArgs = {
 
 
 export type QueryTodosArgs = {
+  dueDate?: InputMaybe<DueDate>;
   isCompleted?: InputMaybe<Scalars['Boolean']['input']>;
   orderBy?: InputMaybe<TodoOrderByInput>;
   skip?: InputMaybe<Scalars['Int']['input']>;
@@ -92,6 +98,7 @@ export type Todo = {
   __typename?: 'Todo';
   completed: Scalars['Boolean']['output'];
   createdAt: Scalars['Timestamp']['output'];
+  dueDate: Scalars['Timestamp']['output'];
   id: Scalars['ID']['output'];
   title: Scalars['String']['output'];
   updatedAt: Scalars['Timestamp']['output'];
@@ -184,6 +191,7 @@ export type ResolversTypes = {
   CreateSomethingInput: CreateSomethingInput;
   CreateTodoInput: CreateTodoInput;
   DeleteTodoInput: DeleteTodoInput;
+  DueDate: DueDate;
   ID: ResolverTypeWrapper<Scalars['ID']['output']>;
   Int: ResolverTypeWrapper<Scalars['Int']['output']>;
   Mutation: ResolverTypeWrapper<{}>;
@@ -241,6 +249,7 @@ export interface TimestampScalarConfig extends GraphQLScalarTypeConfig<Resolvers
 export type TodoResolvers<ContextType = any, ParentType extends ResolversParentTypes['Todo'] = ResolversParentTypes['Todo']> = {
   completed?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
   createdAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
+  dueDate?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   title?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   updatedAt?: Resolver<ResolversTypes['Timestamp'], ParentType, ContextType>;
