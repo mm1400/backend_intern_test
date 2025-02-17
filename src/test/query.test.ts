@@ -3,7 +3,7 @@ const expect = chai.expect;
 import *  as sinon from  'sinon';
 import { prisma } from '../graphql/prisma';
 import { Context } from '../graphql/context';
-import { graphql } from 'graphql';
+import { graphql, GraphQLError } from 'graphql';
 import { schema } from '../graphql/schema';
 import { Todo } from '@prisma/client';
 
@@ -108,6 +108,13 @@ describe('Todos tests', () => {
         dueDate: todo.dueDate?.getTime() ?? null
       }))
     )
+  });
+
+  it('should throw error for invalid dueDate', async () => {
+    const variables = { dueDate: 'invalid' };
+    const result = await executeQuery(todosQuery, variables);
+
+    expect(result.errors && result.errors[0].message).to.exist;
   });
 
 });
