@@ -117,4 +117,11 @@ describe('Todos tests', () => {
     expect(result.errors && result.errors[0].message).to.exist;
   });
 
+  it('should throw error if multiple orderBy fields are provided', async () => {
+    const variables = { orderBy: { title: 'asc', createdAt: 'desc' } };
+    const result = await executeQuery(todosQuery, variables);
+
+    expect(result.errors && result.errors[0].message).to.exist;
+  });
+  
 });
