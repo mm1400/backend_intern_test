@@ -31,6 +31,19 @@ const todoQuery = `
 
 `
 
+const todosQuery  = `
+  query GetTodos($orderBy: TodoOrderByInput, $isCompleted: Boolean, $dueDate: DueDate, $skip: Int, $take: Int) {
+    todos(orderBy: $orderBy, isCompleted: $isCompleted, dueDate: $dueDate, skip: $skip, take: $take) {
+      id
+      title
+      completed
+      createdAt
+      updatedAt
+      dueDate
+    }
+  }
+`
+
 const executeQuery = async (query: string, variables: any) => {
   const context: Context = { prisma };
   return await graphql({
@@ -65,7 +78,7 @@ describe('Todo tests', () => {
   });
 
   it("should return null if id doesn't exist", async () => {
-    
+
     sinon.replace(prisma.todo, 'findUnique', sinon.fake.resolves(null));
 
     const variables = { id : '999999999'};
@@ -74,4 +87,27 @@ describe('Todo tests', () => {
 
     expect(result?.data?.todo).to.be.null;
   });
+});
+
+describe('Todos tests', () => {
+
+  afterEach(() => {
+    sinon.restore();
+  })
+
+  it('should return all todos', async () => {
+    prisma.todo.findMany = sinon.stub().resolves(mockTodos);
+    
+    const result = await executeQuery(todosQuery, {});
+
+    expect(result?.data?.todos).to.deep.equal(
+      mockTodos.map(todo => ({
+        ...todo,
+        createdAt: todo.createdAt.getTime(),
+        updatedAt: todo.updatedAt.getTime(),
+        dueDate: todo.dueDate?.getTime() ?? null
+      }))
+    )
+  });
+
 });
