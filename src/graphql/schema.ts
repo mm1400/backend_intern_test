@@ -35,4 +35,4 @@ const yoga = createYoga({
 });
 yogaPublicRouter.use(yoga);
 
-export { yogaPublicRouter, yoga as yogaPublic };
+export { yogaPublicRouter, yoga as yogaPublic, schema };
