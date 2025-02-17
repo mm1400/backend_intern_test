@@ -17,6 +17,30 @@ const mockTodos: Todo[] = [
   { id: '2', title: 'Test Todo 2', completed: true, createdAt: new Date(), updatedAt: new Date(), dueDate: null },
 ];
 
+const todoQuery = `
+  query GetTodo($id: ID!) {
+    todo(id: $id) {
+      id
+      title
+      completed
+      createdAt
+      updatedAt
+      dueDate
+    }
+  }
+
+`
+
+const executeQuery = async (query: string, variables: any) => {
+  const context: Context = { prisma };
+  return await graphql({
+    schema: schema,
+    source: query,
+    variableValues: variables,
+    contextValue: context
+  });
+
+}
 describe('Todo tests', () => {
 
   afterEach(function () {
@@ -27,27 +51,10 @@ describe('Todo tests', () => {
 
     prisma.todo.findUnique = sinon.stub().resolves(mockTodos[0]);
     
-    const query = `
-      query GetTodo($id: ID!) {
-        todo(id: $id) {
-          id
-          title
-          completed
-          createdAt
-          updatedAt
-          dueDate
-        }
-      }
-    `
     const variables = { id : '1'};
-    const context: Context = { prisma };
 
-    const result = await graphql({
-      schema: schema,
-      source: query,
-      variableValues: variables,
-      contextValue: context
-    });
+    const result = await executeQuery(todoQuery, variables);
+
     const expectedTodo = {
       ...mockTodos[0],
       createdAt: mockTodos[0].createdAt.getTime(),
@@ -58,30 +65,13 @@ describe('Todo tests', () => {
   });
 
   it("should return null if id doesn't exist", async () => {
+    
     sinon.replace(prisma.todo, 'findUnique', sinon.fake.resolves(null));
-    const query = `
-      query GetTodo($id: ID!) {
-        todo(id: $id) {
-          id
-          title
-          completed
-          createdAt
-          updatedAt
-          dueDate
-        }
-      }
-    `
-    const variables = { id : '999999999'};
-    const context: Context = { prisma };
 
-    const result = await graphql({
-      schema: schema,
-      source: query,
-      variableValues: variables,
-      contextValue: context
-    });
+    const variables = { id : '999999999'};
+
+    const result = await executeQuery(todoQuery, variables);
 
     expect(result?.data?.todo).to.be.null;
-    console.log(result);
   });
 });
