@@ -2,12 +2,10 @@ import "reflect-metadata";
 import { Router } from "express";
 import { createYoga, createSchema, useExtendContext } from "graphql-yoga";
 import { typeDefs } from "./typeDefinitions";
-import { PrismaClient } from "@prisma/client";
+import { prisma } from "./prisma";
 import { Query } from "./query";
 import { Mutation } from "./mutation";
 import { Timestamp } from "./timestamp";
-
-const prisma = new PrismaClient();
 
 const yogaPublicRouter = Router();
 
@@ -37,4 +35,4 @@ const yoga = createYoga({
 });
 yogaPublicRouter.use(yoga);
 
-export { yogaPublicRouter, yoga as yogaPublic };
+export { yogaPublicRouter, yoga as yogaPublic, schema };
