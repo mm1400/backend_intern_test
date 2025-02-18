@@ -33,6 +33,19 @@ const deleteTodoMutation = `
   }
 `;
 
+const updateTodoMutation = `
+  mutation UpdateTodo($input: UpdateTodoInput!) {
+    updateTodo(input: $input) {
+      id
+      title
+      completed
+      createdAt
+      updatedAt
+      dueDate
+    }
+  }
+`;
+
 const mockTodo = {
   id: '1',
   title: 'test',
@@ -109,5 +122,38 @@ describe('DeleteTodo tests', () => {
 
     expect(result?.data?.deleteTodo).to.deep.equal(expectedTodo);
   
+  });
+
+  describe('UpdateTodo tests', () => {
+    
+    afterEach(() => {
+      sinon.restore();
+    });
+
+    it('should update a todo', async () => {
+
+      prisma.todo.update = sinon.stub().resolves(mockTodo);
+
+      const variables = { input: { id: '1', title: 'test', completed: true, dueDate: 88888888 } };
+
+      const result = await executeMutation(updateTodoMutation, variables);
+
+      const expectedTodo = {
+        ...mockTodo,
+        createdAt: mockTodo.createdAt.getTime(),
+        updatedAt: mockTodo.updatedAt.getTime(),
+        dueDate: null
+      };
+
+      expect(result?.data?.updateTodo).to.deep.equal(expectedTodo); 
+    });
+
+    it('should throw an error if input is empty', async () => {
+      const variables = { input: {} };
+
+      const result = await executeMutation(updateTodoMutation, variables);
+
+      expect(result?.errors?.[0].message).to.exist;
+    });
   });
 });
