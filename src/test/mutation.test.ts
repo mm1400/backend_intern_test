@@ -5,7 +5,6 @@ import { prisma } from '../graphql/prisma';
 import { Context } from '../graphql/context';
 import { graphql } from 'graphql';
 import { schema } from '../graphql/schema';
-import { mock } from 'node:test';
 
 const createTodoMutation = `
   mutation CreateTodo($input: CreateTodoInput!) {

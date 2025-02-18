@@ -3,7 +3,7 @@ const expect = chai.expect;
 import *  as sinon from  'sinon';
 import { prisma } from '../graphql/prisma';
 import { Context } from '../graphql/context';
-import { graphql, GraphQLError } from 'graphql';
+import { graphql} from 'graphql';
 import { schema } from '../graphql/schema';
 import { Todo } from '@prisma/client';
 
