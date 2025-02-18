@@ -19,6 +19,12 @@ export const Query: IQuery<Context> = {
     if (args.dueDate && args.dueDate !== 'overdue' && args.dueDate !== 'upcoming') {
       throw new GraphQLError("dueDate must be either 'overdue' or 'upcoming'");
     }
+    const skip = args?.skip ?? 0;
+    const take = args?.take ?? 10;
+
+    if (skip < 0 || take < 0) {
+      throw new GraphQLError("skip and take must be positive integers");
+    }
 
     const dueDateFilters = {
       overdue: { lt: new Date() } ,
@@ -34,8 +40,8 @@ export const Query: IQuery<Context> = {
         createdAt: args.orderBy?.createdAt ?? undefined,
         updatedAt: args.orderBy?.updatedAt ?? undefined
       },
-      skip: args.skip ?? 0,
-      take: args.take ?? undefined
+      skip: skip,
+      take: take
     })
     return todos;
   }
