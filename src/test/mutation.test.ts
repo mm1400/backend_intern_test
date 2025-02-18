@@ -47,7 +47,7 @@ describe('CreateTodo tests', () => {
 
     prisma.todo.create = sinon.stub().resolves(mockTodo);
 
-    const variables = { input: { title: 'test', dueDate: null } };
+    const variables = { input: { title: 'test'} };
 
     const result = await executeMutation(createTodoMutation, variables);
 
