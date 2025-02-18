@@ -124,4 +124,10 @@ describe('Todos tests', () => {
     expect(result.errors && result.errors[0].message).to.exist;
   });
   
+  it ('should throw error if skip or take is negative', async () => {
+    const variables = { skip: -1, take: -1 };
+    const result = await executeQuery(todosQuery, variables);
+
+    expect(result.errors && result.errors[0].message).to.exist;
+  });
 });
